@@ -38,7 +38,8 @@ const schema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        required: false
+        required: false,
+        enum: ['female', 'male']
     },
     role: {
         type: String,

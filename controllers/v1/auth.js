@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const userModel = require('../../models/user')
 const registerValidator = require('../../validators/v1/register')
 const loginValidator = require('../../validators/v1/login')
+const banUserModel = require('../../models/banUser')
 require('dotenv').config()
 
 exports.register = async (req, res) => {
@@ -20,8 +21,15 @@ exports.register = async (req, res) => {
             return res.status(422).json(resultValidate)
         }
 
+        const isBanUser = await banUserModel.find({ phone })
+
+
+        if (isBanUser.length) {
+            return res.status(403).json({ message: 'you are banned' })
+        }
+
         const isExistUser = await userModel.findOne(
-            { $or: [{ email }, { phone }, { username }] }
+            { $or: [{ email }, { username }] }
         )
 
         if (isExistUser) {
@@ -55,7 +63,7 @@ exports.register = async (req, res) => {
 
     } catch (err) {
 
-        return res.status(500).json({ message: 'unknown server error' }, err)
+        return res.status(500).json({ message: 'unknown server error' })
     }
 
 }
@@ -68,7 +76,7 @@ exports.login = async (req, res) => {
 
         const resultValidate = loginValidator(req.body)
 
-        if(resultValidate !==true){
+        if (resultValidate !== true) {
             return res.status(422).json(resultValidate)
         }
 
@@ -84,6 +92,12 @@ exports.login = async (req, res) => {
 
         if (!validatePassword) {
             return res.status(401).json({ message: 'email | phone or password is not valid' })
+        }
+
+        const isBanUser = await banUserModel.find({ phone: validateIdentifier.phone })
+
+        if (isBanUser.length) {
+            return res.status(403).json({ message: 'you are banned' })
         }
 
         const accessToken = jwt.sign({ id: validateIdentifier._id }, process.env.SECRET_KEY, {
@@ -104,7 +118,6 @@ exports.login = async (req, res) => {
 
 exports.getMe = async (req, res) => {
 
-    
-
+    //codes ...
 
 }

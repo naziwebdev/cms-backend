@@ -6,14 +6,14 @@ const isAdminMiddleware = require('../../middlewares/isAdmin')
 const router = express.Router()
 
 router.route('/')
-    .get(authMiddleware,isAdminMiddleware,userController.getAll)
+    .get(authMiddleware, isAdminMiddleware, userController.getAll)
 
 router.route('/ban/:id')
     .put(authMiddleware, isAdminMiddleware, userController.banUser)
 
 router.route('/:id')
-.delete(authMiddleware,isAdminMiddleware,userController.deleteUser)
-
+    .delete(authMiddleware, isAdminMiddleware, userController.deleteUser)
+    .put(authMiddleware, isAdminMiddleware, userController.editUser)
 
 
 module.exports = router

@@ -11,6 +11,9 @@ router.route('/')
 router.route('/ban/:id')
     .put(authMiddleware, isAdminMiddleware, userController.banUser)
 
+router.route('/role')
+    .put(authMiddleware, isAdminMiddleware, userController.changeRole)
+
 router.route('/:id')
     .delete(authMiddleware, isAdminMiddleware, userController.deleteUser)
     .put(authMiddleware, isAdminMiddleware, userController.editUser)

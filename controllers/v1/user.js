@@ -87,6 +87,7 @@ exports.deleteUser = async (req, res) => {
 }
 
 
+
 exports.banUser = async (req, res) => {
     try {
         const { id } = req.params
@@ -113,4 +114,32 @@ exports.banUser = async (req, res) => {
         return res.json(err)
     }
 
+}
+
+
+exports.changeRole = async (req, res) => {
+    try {
+
+        const {id} = req.body
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: 'id is not valid' })
+        }
+
+        const user = await userModel.findOne({ _id: id })
+
+        const newRole = user.role === 'ADMIN' ? 'USER' : 'ADMIN'
+
+        const roleUpdated = await userModel.findOneAndUpdate({ _id: id },
+            { role: newRole })
+
+        if (!roleUpdated) {
+            return res.status(404).json({ message: 'not found user' })
+        }
+
+        return res.status(200).json({ message: 'user role updated successfully' })
+
+    } catch (error) {
+         return res.json(error)
+    }
 }

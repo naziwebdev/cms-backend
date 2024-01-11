@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 const { isValidObjectId } = require('mongoose')
 const productModel = require('../../models/product')
 const productValidator = require('../../validators/v1/product')
@@ -101,6 +104,28 @@ exports.editProduct = async (req, res) => {
 
 exports.removeProduct = async (req, res) => {
     try {
+
+        const { id } = req.params
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: 'id is not valid' })
+        }
+
+        const removedProduct = await productModel.findOneAndDelete({ _id: id })
+
+        const coverUrl = path.join(__dirname, '..', '..', 'public', 'products'
+            , 'covers', removedProduct.cover)
+
+
+        fs.unlinkSync(coverUrl)
+
+        if (!removedProduct) {
+            return res.status(404).json({ message: 'not found product' })
+        }
+
+        //delete comments of product
+
+        return res.status(200).json({ message: 'product removed successfully' })
 
     } catch (error) {
         return res.json(error)

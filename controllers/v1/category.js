@@ -1,3 +1,4 @@
+const { isValidObjectId } = require('mongoose')
 const categoryModel = require('../../models/category')
 const categoryValidator = require('../../validators/v1/category')
 
@@ -41,5 +42,40 @@ exports.getAll = async (req, res) => {
     } catch (error) {
 
         return res.json(error)
+    }
+}
+
+
+exports.editCategory = async (req, res) => {
+    try {
+
+        const { id } = req.params
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: 'id is not valid' })
+        }
+
+        const { title, href } = req.body
+
+        const resultValidate = categoryValidator(req.body)
+
+        if (resultValidate !== true) {
+            return res.status(422).json({ message: 'body is not valid' })
+        }
+
+        const updatedCategory = await categoryModel.findOneAndUpdate({ _id: id },
+            { title, href })
+
+        if (!updatedCategory) {
+            return res.status(404).json({ message: 'not found category' })
+        }
+
+        return res.status(200).json({ message: 'category updated successfully' })
+
+
+    } catch (error) {
+
+        return res.json(err)
+
     }
 }

@@ -5,8 +5,15 @@ const isAdminMiddleware = require('../../middlewares/isAdmin')
 
 const router = express.Router()
 
+router.route('/')
+    .get(authMiddleware,isAdminMiddleware,userController.getAll)
+
 router.route('/ban/:id')
-.put(authMiddleware,isAdminMiddleware,userController.banUser)
+    .put(authMiddleware, isAdminMiddleware, userController.banUser)
+
+router.route('/:id')
+.delete(authMiddleware,isAdminMiddleware,userController.deleteUser)
+
 
 
 module.exports = router

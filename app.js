@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const cors = require('cors')
 const authRouter = require('./routes/v1/auth')
 const usersRouter = require('./routes/v1/user')
@@ -9,8 +10,10 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 
+
+app.use('/products/covers',express.static(path.join(__dirname,'public','prducts','covers')))
 
 
 app.use('/v1/auth', authRouter)

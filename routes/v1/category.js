@@ -11,6 +11,6 @@ router.route('/')
 
 router.route('/:id')
     .put(authMiddleware, isAdminMiddleware, categoryController.editCategory)
-
+    .delete(authMiddleware, isAdminMiddleware, categoryController.deleteCategory)
 
 module.exports = router

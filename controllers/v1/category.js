@@ -70,12 +70,37 @@ exports.editCategory = async (req, res) => {
             return res.status(404).json({ message: 'not found category' })
         }
 
-        return res.status(200).json({ message: 'category updated successfully' })
+        return res.status(200).json({ message: 'category updated successfully', updatedCategory })
 
 
     } catch (error) {
 
         return res.json(err)
+
+    }
+}
+
+
+exports.deleteCategory = async (req, res) => {
+    try {
+
+        const { id } = req.params
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: 'id is not valid' })
+        }
+
+        const removedCategory = await categoryModel.findOneAndDelete({ _id: id })
+
+        if (!removedCategory) {
+            return res.status(404).json({ message: 'there is not category' })
+        }
+
+        return res.status(200).json({ message: 'category removed successfully', removedCategory })
+
+    } catch (error) {
+
+        return res.json(error)
 
     }
 }

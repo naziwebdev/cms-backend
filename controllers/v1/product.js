@@ -1,3 +1,4 @@
+const { isValidObjectId } = require('mongoose')
 const productModel = require('../../models/product')
 const productValidator = require('../../validators/v1/product')
 
@@ -38,5 +39,70 @@ exports.create = async (req, res) => {
 
     } catch (err) {
         return res.json(err)
+    }
+}
+
+
+exports.getAll = async (req, res) => {
+    try {
+
+        const products = await productModel.find({}).populate('categoryId')
+            .lean()
+            .sort({ _id: -1 })
+
+        if (!products) {
+            return res.status(404).json({ message: 'there is no product' })
+        }
+
+        return res.status(200).json(products)
+
+    } catch (error) {
+        return res.json(error)
+    }
+}
+
+
+exports.editProduct = async (req, res) => {
+    try {
+
+        const { id } = req.params
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: 'id is not valid' })
+        }
+
+        const { title, price, href, discount, categoryId } = req.body
+        const cover = req.file.filename
+
+
+        const resultValidator = productValidator({ ...req.body, cover })
+
+        if (resultValidator !== true) {
+            return res.status(422).json(resultValidator)
+        }
+
+        const updatedProduct = await productModel.findOneAndUpdate({ _id: id },
+            { title, price, href, discount, cover, categoryId })
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: 'not found product' })
+        }
+
+        return res.status(200).json({
+            message: 'product updated successfully', product:
+                updatedProduct
+        })
+
+    } catch (error) {
+        return res.json(error)
+    }
+}
+
+
+exports.removeProduct = async (req, res) => {
+    try {
+
+    } catch (error) {
+        return res.json(error)
     }
 }

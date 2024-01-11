@@ -15,7 +15,15 @@ router.route('/')
             .single('cover'),
         authMiddleware, isAdminMiddleware, productController.create
     )
+    .get(productController.getAll)
 
 
+router.route('/:id')
+    .put(
+        multer({ storage: multerStorage, limits: { fileSize: 1000000000 } })
+            .single('cover'),
+        authMiddleware, isAdminMiddleware, productController.editProduct
+    )
+    .delete(authMiddleware, isAdminMiddleware, productController.removeProduct)
 
 module.exports = router

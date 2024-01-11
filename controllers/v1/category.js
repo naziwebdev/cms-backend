@@ -13,6 +13,12 @@ exports.create = async (req, res) => {
             return res.status(422).json({ message: 'body is not valid' })
         }
 
+        const isExistCategory = await categoryModel.findOne({ title, href }).lean()
+
+        if (isExistCategory) {
+            return res.status(409).json({ message: 'this category exsist already' })
+        }
+
         const category = await categoryModel.create({ title, href })
 
         if (!category) {

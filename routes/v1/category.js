@@ -9,4 +9,5 @@ router.route('/')
     .post(authMiddleware, isAdminMiddleware, categoryController.create)
 
 
+
 module.exports = router

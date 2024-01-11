@@ -7,7 +7,10 @@ const router = express.Router()
 
 router.route('/')
     .post(authMiddleware, isAdminMiddleware, categoryController.create)
+    .get(categoryController.getAll)
 
+router.route('/:id')
+    .put(authMiddleware, isAdminMiddleware, categoryController.editCategory)
 
 
 module.exports = router

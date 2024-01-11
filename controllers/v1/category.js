@@ -25,3 +25,21 @@ exports.create = async (req, res) => {
     }
 }
 
+
+exports.getAll = async (req, res) => {
+    try {
+
+        categories = await categoryModel.find({}).lean()
+
+        if (!categories) {
+            {
+                return res.status(404).json({ message: 'there is no category' })
+            }
+        }
+        return res.status(200).json(categories)
+
+    } catch (error) {
+
+        return res.json(error)
+    }
+}

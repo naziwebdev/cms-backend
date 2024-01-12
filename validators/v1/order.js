@@ -6,19 +6,15 @@ const schema = {
 
     product: {
         type: 'string',
-        pattern: /^[0-9a-fA-F]{24} $/
+        pattern:/^[0-9a-fA-F]{24}$/
     },
     price: {
         type: 'number',
         min: 0,
     },
-    status: {
-        type: 'enum',
-        values: ['processing', 'posted', 'cancle', 'returned']
-    },
     user: {
         type: 'string',
-        pattern: /^[0-9a-fA-F]{24}$/
+        pattern:/^[0-9a-fA-F]{24}$/
     }
 
 }

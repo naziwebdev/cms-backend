@@ -7,12 +7,12 @@ const router = express.Router()
 
 router.route('/')
     .post(authMiddleware, orderController.create)
-    .get(authMiddleware, isAdminMiddleware, getAllOrders)
+    .get(authMiddleware, isAdminMiddleware, orderController.getAll)
 
 
 router.route('/:id')
-    .put(authMiddleware, isAdminMiddleware, editOrder)
-    .delete(authMiddleware, isAdminMiddleware, removeOrder)
+    .put(authMiddleware, isAdminMiddleware, orderController.editOrder)
+    .delete(authMiddleware, isAdminMiddleware, orderController.remove)
 
 
 module.exports = router

@@ -18,7 +18,6 @@ const schema = new mongoose.Schema({
     },
     score: {
         type: Number,
-        required: true,
         default: 5,
         min:0,
         max:5

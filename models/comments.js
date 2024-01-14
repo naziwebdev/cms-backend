@@ -28,11 +28,6 @@ const schema = new mongoose.Schema({
         ref: 'Product',
         required: true
     },
-    Answer: {
-        type: Number,
-        required: true,
-        default: 0
-    },
     isAnswer: {
         type: Number,
         required: true,
@@ -42,6 +37,11 @@ const schema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Comment',
         required: false
+    },
+    isAccept:{
+        type: Number,
+        required: true,
+        default: 0
     }
 
 }, { timestamps: true })

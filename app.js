@@ -6,6 +6,7 @@ const usersRouter = require('./routes/v1/user')
 const categoryRouter = require('./routes/v1/category')
 const productRouter = require('./routes/v1/product')
 const orderRouter = require('./routes/v1/order')
+const commentRouter = require('./routes/v1/comment')
 
 const app = express()
 
@@ -22,6 +23,7 @@ app.use('/v1/users', usersRouter)
 app.use('/v1/category', categoryRouter)
 app.use('/v1/products', productRouter)
 app.use('/v1/orders', orderRouter)
+app.use('/v1/comments', commentRouter)
 
 
 module.exports = app

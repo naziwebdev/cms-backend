@@ -28,6 +28,13 @@ const schema = new mongoose.Schema({
 }, { timestamps: true })
 
 
+schema.virtual('comments', {
+    ref: 'Comment',
+    localField: '_id',
+    foreignField: 'product'
+})
+
+
 const model = mongoose.model('Product', schema)
 
 module.exports = model

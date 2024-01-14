@@ -9,7 +9,8 @@ const schema = {
     cover: { type: 'string', max: 5242880 },
     href: { type: 'string', min: 3, max: 100 },
     discount: { type: 'number', optional: true, min: 0, max: 100 },
-    categoryId: { type: 'string', pattern: /^[0-9a-fA-F]{24}$/ }
+    categoryId: { type: 'string', pattern: /^[0-9a-fA-F]{24}$/ },
+    $$strict:true
 }
 
 const check = v.compile(schema)

@@ -7,6 +7,7 @@ const categoryRouter = require('./routes/v1/category')
 const productRouter = require('./routes/v1/product')
 const orderRouter = require('./routes/v1/order')
 const commentRouter = require('./routes/v1/comment')
+const ticketRouter = require('./routes/v1/ticket')
 
 const app = express()
 
@@ -24,6 +25,8 @@ app.use('/v1/category', categoryRouter)
 app.use('/v1/products', productRouter)
 app.use('/v1/orders', orderRouter)
 app.use('/v1/comments', commentRouter)
+app.use('/v1/tickets', ticketRouter)
+
 
 
 module.exports = app

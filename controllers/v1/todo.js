@@ -36,7 +36,9 @@ exports.create = async (req, res) => {
 exports.getAll = async (req, res) => {
     try {
 
-        const todos = await todoModel.find({}).lean()
+        const todos = await todoModel.find({})
+        .sort({_id:-1})
+        .lean()
 
         if (!todos) {
             return res.status(404).json({ message: 'there is no todo' })

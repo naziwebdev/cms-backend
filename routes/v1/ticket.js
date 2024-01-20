@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.route('/')
     .post(authMiddleware, ticketController.create)
-    .get(isAdminMiddleware, authMiddleware, ticketController.getAll)
+    .get(authMiddleware,isAdminMiddleware, ticketController.getAll)
 
 router.route('/answer')
     .post(authMiddleware, isAdminMiddleware, ticketController.setAnswer)

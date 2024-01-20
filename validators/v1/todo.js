@@ -4,9 +4,7 @@ const v = new validator()
 
 const schema = {
     title:{type:'string',min:3,max:100},
-    isComplete:{type:'boolean'},
-    user:{type:'string',pattern:/^[0-9a-fA-F]{24}$/},
-    date:{type:'date'},
+    date:{type:'string'},
     $$strict:true
 }
 

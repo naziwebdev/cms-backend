@@ -11,7 +11,7 @@ router.route('/')
     .get(authMiddleware, isAdminMiddleware, todoController.getAll)
 
 router.route('/:id/do')
-    .put(authMiddleware, isAdminMiddleware, todoController.changeComplete)
+    .put(authMiddleware, isAdminMiddleware, todoController.changeStatus)
 
 router.route('/:id')
     .put(authMiddleware, isAdminMiddleware, todoController.editTodo)

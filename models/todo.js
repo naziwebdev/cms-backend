@@ -6,7 +6,7 @@ const schema = new mongoose.Schema({
         required:true
     },
     isComplete:{
-        type:String,
+        type:Boolean,
         required:true,
         default:false
     },
@@ -21,7 +21,7 @@ const schema = new mongoose.Schema({
         default:Date.now
     }
 
-},{timestamps})
+},{timestamps:true})
 
 const model = mongoose.model('Todo',schema)
 

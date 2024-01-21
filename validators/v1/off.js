@@ -25,10 +25,6 @@ const schema = {
         type: 'number',
         min: 1
     },
-    countUsaged: {
-        type: 'number',
-        min: 0
-    },
     user: {
         type: 'string',
         pattern: /^[0-9a-fA-F]{24}$/,

@@ -16,6 +16,6 @@ const schema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-const model = mongoose.model('Note', schema)
+const model = mongoose.model('Notification', schema)
 
 module.exports = model

@@ -16,6 +16,7 @@ router.route('/user')
 router.route('/:id/seen')
     .put(authMiddleware, isAdminMiddleware, notifController.seenNotif)
 
+
 router.route('/:id')
     .put(authMiddleware, isAdminMiddleware, notifController.editNotif)
     .delete(authMiddleware, isAdminMiddleware, notifController.remove)

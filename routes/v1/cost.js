@@ -17,7 +17,7 @@ router.route('/high-price')
     .get(authMiddleware, isAdminMiddleware, costController.getHighPrice)
 
 router.route('/:id')
-    .put(authMiddleware, isAdminMiddleware, costController.editNote)
+    .put(authMiddleware, isAdminMiddleware, costController.editCost)
     .delete(authMiddleware, isAdminMiddleware, costController.remove)
 
 module.exports = router

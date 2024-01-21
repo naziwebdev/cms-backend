@@ -23,7 +23,7 @@ exports.create = async (req, res) => {
             return res.status(404).json({ message: 'there is no note' })
         }
 
-        return res.status(200).json({ message: 'note created successfully', note })
+        return res.status(201).json({ message: 'note created successfully', note })
 
     } catch (error) {
         return res.json(error)

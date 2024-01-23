@@ -13,6 +13,7 @@ const noteRouter = require('./routes/v1/note')
 const offRouter = require('./routes/v1/off')
 const notifRouter = require('./routes/v1/notification')
 const costRouter = require('./routes/v1/cost')
+const eventRouter = require('./routes/v1/event')
 
 const app = express()
 
@@ -35,7 +36,8 @@ app.use('/v1/todos', todoRouter)
 app.use('/v1/notes', noteRouter)
 app.use('/v1/offs', offRouter)
 app.use('/v1/notifs', notifRouter)
-app.use('/v1/costs',costRouter)
+app.use('/v1/costs', costRouter)
+app.use('/v1/events', eventRouter)
 
 
 module.exports = app

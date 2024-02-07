@@ -6,7 +6,7 @@ const noteValidator = require('../../validators/v1/note')
 exports.create = async (req, res) => {
     try {
 
-        const { body } = req.body
+        const { subject,body } = req.body
 
         const resultValidate = noteValidator(req.body)
 
@@ -15,6 +15,7 @@ exports.create = async (req, res) => {
         }
 
         const note = await noteModel.create({
+            subject,
             body,
             user: req.user._id,
         })
@@ -58,7 +59,7 @@ exports.editNote = async (req, res) => {
         if (!isValidObjectId(id)) {
             return res.status(400).json({ message: 'id is not valid' })
         }
-        const { body } = req.body
+        const { subject,body } = req.body
 
         const resultValidate = noteValidator(req.body)
 
@@ -67,6 +68,7 @@ exports.editNote = async (req, res) => {
         }
 
         const updatedNote = await noteModel.findOneAndUpdate({ _id: id }, {
+            subject,
             body
         })
 

@@ -1,12 +1,13 @@
-const validator = require('fastest-validator')
+const validator = require("fastest-validator");
 
-const v = new validator()
+const v = new validator();
 
 const schema = {
-    body:{type:'string',min:3,max:100},
-    $$strict:true
-}
+  subject: { type: "string", min: 3, max: 3000 },
+  body: { type: "string", min: 3, max: 100 },
+  $$strict: true,
+};
 
-const check = v.compile(schema)
+const check = v.compile(schema);
 
-module.exports = check
+module.exports = check;

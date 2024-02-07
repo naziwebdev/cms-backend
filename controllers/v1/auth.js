@@ -12,9 +12,11 @@ exports.register = async (req, res) => {
     try {
 
         const { name, username, email, phone, password,
-            age, gender } = req.body
+            age, gender} = req.body
 
-        const resultValidate = registerValidator(req.body)
+            const avatar = req.file.filename
+
+        const resultValidate = registerValidator({ ...req.body, avatar })
 
         //if put !resultValidator its dont work
         if (resultValidate !== true) {
@@ -44,7 +46,8 @@ exports.register = async (req, res) => {
             name, username, email, phone,
             password: hashPassword,
             age, gender,
-            role: countUser > 0 ? 'USER' : 'ADMIN'
+            role: countUser > 0 ? 'USER' : 'ADMIN',
+            avatar
         })
 
         const mainUser = user.toObject()
@@ -63,7 +66,7 @@ exports.register = async (req, res) => {
 
     } catch (err) {
 
-        return res.status(500).json({ message: 'unknown server error' })
+        return res.status(500).json(err)
     }
 
 }

@@ -4,7 +4,8 @@ const path = require('path')
 module.exports = multer.diskStorage({
 
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '..', 'public', 'products', 'covers'))
+        
+        cb(null, path.join(__dirname, '..', 'public', 'users', 'avatar'))
     },
 
     filename: (req, file, cb) => {

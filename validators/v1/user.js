@@ -11,6 +11,7 @@ const schema = {
     confirmPassword: { type: 'equal', field: 'password' },
     age: { type: 'number' , optional:true},
     gender: { type: 'enum', values: ['female', 'male'] , optional:true},
+    avatar: { type: 'string', max: 5242880 , optional:true},
     $$strict: true
 }
 

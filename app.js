@@ -23,6 +23,7 @@ app.use(express.urlencoded({ extended: true }))
 
 
 app.use('/products/covers', express.static(path.join(__dirname, 'public', 'prducts', 'covers')))
+app.use('/users/avatar', express.static(path.join(__dirname, 'public', 'users', 'avatar')))
 
 
 app.use('/v1/auth', authRouter)

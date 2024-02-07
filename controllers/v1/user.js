@@ -72,6 +72,7 @@ exports.deleteUser = async (req, res) => {
         const removedUser = await userModel.findOneAndDelete({ _id: id })
             .select('-password').lean()
 
+
         if (!removedUser) {
             return res.status(404).json({ message: 'there is no user' })
         }

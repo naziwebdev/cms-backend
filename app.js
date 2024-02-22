@@ -22,7 +22,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
-app.use('/products/covers', express.static(path.join(__dirname, 'public', 'prducts', 'covers')))
+app.use('/products/covers', express.static(path.join(__dirname, 'public', 'products', 'covers')))
 app.use('/users/avatar', express.static(path.join(__dirname, 'public', 'users', 'avatar')))
 
 

@@ -9,9 +9,9 @@ const productValidator = require('../../validators/v1/product')
 exports.create = async (req, res) => {
 
     try {
+
         const { title, price, href, discount, categoryId } = req.body
         const cover = req.file.filename
-
 
         const resultValidator = productValidator({ ...req.body, cover })
 

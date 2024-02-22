@@ -7,7 +7,7 @@ const router = express.Router()
 
 
 router.route('/')
-    .post(authMiddleware, isAdminMiddleware, todoController.create)
+    .post( todoController.create)
     .get(authMiddleware, isAdminMiddleware, todoController.getAll)
 
 router.route('/:id/do')

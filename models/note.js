@@ -15,6 +15,11 @@ const schema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    haveStar:{
+      type:Boolean,
+      required:true,
+      default:false
+    }
   },
   { timestamps: true }
 );

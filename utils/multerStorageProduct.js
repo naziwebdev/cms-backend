@@ -10,7 +10,7 @@ module.exports = multer.diskStorage({
 
     filename: (req, file, cb) => {
 
-        const validFormats = ['.jpeg','.jpg','.png']
+        const validFormats = ['.jpeg','.jpg','.png','.webp']
 
         const filename = Date.now() + String(Math.random() * 9999)
         const fileExt = path.extname(file.originalname)

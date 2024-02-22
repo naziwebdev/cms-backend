@@ -11,9 +11,9 @@ const router = express.Router()
 
 router.route('/')
     .post(
-        multer({ storage: multerStorageProduct, limits: { fileSize: 1000000000 } })
+        multer({ storage: multerStorageProduct, limits: { fileSize: 10000000000 } })
             .single('cover'),
-        authMiddleware, isAdminMiddleware, productController.create
+        productController.create
     )
     .get(productController.getAll)
 
@@ -22,8 +22,8 @@ router.route('/:id')
     .put(
         multer({ storage: multerStorageProduct, limits: { fileSize: 1000000000 } })
             .single('cover'),
-        authMiddleware, isAdminMiddleware, productController.editProduct
+         productController.editProduct
     )
-    .delete(authMiddleware, isAdminMiddleware, productController.removeProduct)
+    .delete( productController.removeProduct)
 
 module.exports = router

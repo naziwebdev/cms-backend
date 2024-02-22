@@ -1,22 +1,27 @@
 const express = require('express')
 const userController = require('../../controllers/v1/user')
+const multer = require('multer')
+const multerStorageUser = require('../../utils/multerStorageUser')
 const authMiddleware = require('../../middlewares/auth')
 const isAdminMiddleware = require('../../middlewares/isAdmin')
 
 const router = express.Router()
 
 router.route('/')
-    .get(authMiddleware, isAdminMiddleware, userController.getAll)
+    .get( userController.getAll)
 
 router.route('/ban/:id')
-    .put(authMiddleware, isAdminMiddleware, userController.banUser)
+    .put(userController.banUser)
 
 router.route('/role')
-    .put(authMiddleware, isAdminMiddleware, userController.changeRole)
+    .put(userController.changeRole)
 
 router.route('/:id')
-    .delete(authMiddleware, isAdminMiddleware, userController.deleteUser)
-    .put(authMiddleware, isAdminMiddleware, userController.editUser)
+    .delete( userController.deleteUser)
+    .put(  multer({
+        storage: multerStorageUser,
+        limits: { fileSize: 1000000000 },
+      }).single("avatar"),userController.editUser)
 
 
 module.exports = router

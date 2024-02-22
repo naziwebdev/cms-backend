@@ -7,12 +7,14 @@ const router = express.Router()
 
 
 router.route('/')
-    .post(authMiddleware, isAdminMiddleware, noteController.create)
-    .get(authMiddleware, isAdminMiddleware, noteController.getAll)
+    .post(authMiddleware,isAdminMiddleware, noteController.create)
+    .get(authMiddleware,isAdminMiddleware,noteController.getAll)
 
+router.route('/star/:id')
+.put(authMiddleware,isAdminMiddleware,noteController.starNote)
 
 router.route('/:id')
-    .put(authMiddleware, isAdminMiddleware, noteController.editNote)
-    .delete(authMiddleware, isAdminMiddleware, noteController.remove)
+    .put(authMiddleware,isAdminMiddleware,noteController.editNote)
+    .delete(authMiddleware,isAdminMiddleware,noteController.remove)
 
 module.exports = router

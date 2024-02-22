@@ -17,6 +17,7 @@ exports.create = async (req, res) => {
         const note = await noteModel.create({
             subject,
             body,
+            haveStar:0,
             user: req.user._id,
         })
 
@@ -36,7 +37,8 @@ exports.getAll = async (req, res) => {
     try {
 
         const notes = await noteModel.find({})
-        .sort({_id:-1})
+        .sort({haveStar:-1})
+        .populate('user','name')
         .lean()
 
         if (!notes) {
@@ -103,6 +105,37 @@ exports.remove = async (req, res) => {
 
         return res.status(200).json({ message: 'note removed successfully' })
 
+    } catch (error) {
+        return res.json(error)
+    }
+}
+
+exports.starNote = async (req,res) => {
+    try {
+        const { id } = req.params
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: 'id is not valid' })
+        }
+
+        const toggleStar = await noteModel.findOneAndUpdate({_id:id},
+            [
+                {
+                  $set: {
+                    haveStar: {
+                      $not: "$haveStar"
+                    }
+                  }
+                }
+              ])
+
+            
+        if (!toggleStar) {
+            return res.status(404).json({ message: 'there is no note' })
+        }
+
+        return res.status(200).json({ message: 'note put star successfully' })
+        
     } catch (error) {
         return res.json(error)
     }

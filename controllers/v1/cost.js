@@ -4,8 +4,8 @@ const costValidator = require('../../validators/v1/cost')
 
 
 exports.create = async (req, res) => {
+  
     try {
-
         const { title, status, date, price } = req.body
 
         const resultValidate = costValidator(req.body)

@@ -11,12 +11,11 @@ const schema = new mongoose.Schema({
         required: true
     },
     date: {
-        type:Date,
+        type:String,
         required: true,
-        default: Date.now, 
     },
     price: {
-        type:string,
+        type:String,
         required: true
     }
 }, { timestamps: true })

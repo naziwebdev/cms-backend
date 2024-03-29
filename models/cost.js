@@ -16,7 +16,7 @@ const schema = new mongoose.Schema({
         default: Date.now, 
     },
     price: {
-        type: Number,
+        type:string,
         required: true
     }
 }, { timestamps: true })

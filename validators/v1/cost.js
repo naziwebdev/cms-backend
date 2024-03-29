@@ -6,7 +6,7 @@ const schema = {
     title: { type: 'string', min: 3, max: 100 },
     status: { type: 'enum', values: ['پرداخت شده', 'در انتظار پرداخت', 'لغو شده'] },
     date: { type: 'date', convert:true },
-    price: { type: 'number' },
+    price: { type: 'string' },
     $$strict: true
 }
 

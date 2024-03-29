@@ -51,7 +51,7 @@ exports.getAll = async (req, res) => {
     try {
 
         const comments = await commentModel.find({})
-            .populate('user', 'name')
+            .populate('user', 'name avatar')
             .populate('product', 'title')
             .lean()
 

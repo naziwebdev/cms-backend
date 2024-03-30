@@ -25,7 +25,7 @@ exports.create = async (req, res) => {
             return res.status(404).json({ message: 'there is no todo' })
         }
 
-        return res.status(200).json({ message: 'todo created successfully', todo })
+        return res.status(201).json({ message: 'todo created successfully', todo })
 
     } catch (error) {
         return res.json(error)
@@ -37,7 +37,7 @@ exports.getAll = async (req, res) => {
     try {
 
         const todos = await todoModel.find({})
-        .sort({_id:-1})
+        .sort({haveStar:-1})
         .lean()
 
         if (!todos) {
@@ -134,6 +134,37 @@ exports.remove = async (req, res) => {
 
         return res.status(200).json({ message: 'todo removed successfully' })
 
+    } catch (error) {
+        return res.json(error)
+    }
+}
+
+exports.starTodo = async (req,res) => {
+    try {
+        const { id } = req.params
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: 'id is not valid' })
+        }
+
+        const toggleStar = await todoModel.findOneAndUpdate({_id:id},
+            [
+                {
+                  $set: {
+                    haveStar: {
+                      $not: "$haveStar"
+                    }
+                  }
+                }
+              ])
+
+            
+        if (!toggleStar) {
+            return res.status(404).json({ message: 'there is no note' })
+        }
+
+        return res.status(200).json({ message: 'note put star successfully' })
+        
     } catch (error) {
         return res.json(error)
     }

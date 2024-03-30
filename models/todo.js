@@ -16,10 +16,14 @@ const schema = new mongoose.Schema({
         required:true
     },
     date:{
-        type:Date,
+        type:String,
         required:true,
-        default:Date.now
-    }
+    },
+    haveStar:{
+        type:Boolean,
+        required:true,
+        default:false
+      }
 
 },{timestamps:true})
 

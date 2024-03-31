@@ -98,15 +98,15 @@ exports.getAnswer = async (req, res) => {
         }
 
         const ticket = await ticketModel.findOne({ _id: id })
-            .populate('user', 'name')
+            .populate('user', 'name avatar')
             .lean()
 
-        const answerTicket = await ticketModel.findOne({ parent: id })
-            .populate('user', 'name')
+        const answerTicket = await ticketModel.find({ parent: id })
+            .populate('user', 'name avatar')
             .lean()
 
 
-        if (!ticket || !answerTicket) {
+        if (!ticket && !answerTicket) {
             return res.status(404).json({ message: 'there is no answer for this ticket' })
         }
 

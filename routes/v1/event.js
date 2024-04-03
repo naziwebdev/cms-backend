@@ -15,4 +15,10 @@ router.route('/:id')
     .put(authMiddleware, isAdminMiddleware, eventController.editEvent)
     .delete(authMiddleware, isAdminMiddleware, eventController.remove)
 
+router.route('/today')
+.get(authMiddleware,isAdminMiddleware,eventController.getToday)
+
+router.route('/weekly')
+.get(authMiddleware,isAdminMiddleware,eventController.getWeekly)
+
 module.exports = router

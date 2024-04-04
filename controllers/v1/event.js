@@ -35,7 +35,16 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const events = await eventModel.find({}).sort({ _id: -1 }).lean();
+    const today = new Date();
+
+    const todayFa = today.toLocaleDateString("fa-IR", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      calendar: "persian",
+    });
+
+    const events = await eventModel.find({date:{$gte:todayFa}}).sort({date:1}).lean();
 
     if (!events) {
       return res.status(404).json({ message: "there is no event" });
@@ -93,7 +102,8 @@ exports.getWeekly = async (req, res) => {
       const events = await eventModel.find({  $and: [
         { date: { $gte: nowFa } },
         { date: { $lte: weekFa } }
-      ]}).lean();
+      ]}).sort({date:1})
+      .lean();
 
     if (!events) {
       return res.status(404).json({ message: "there is no event" });

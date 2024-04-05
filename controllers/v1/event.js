@@ -44,7 +44,10 @@ exports.getAll = async (req, res) => {
       calendar: "persian",
     });
 
-    const events = await eventModel.find({date:{$gte:todayFa}}).sort({date:1}).lean();
+    const events = await eventModel
+      .find({ date: { $gte: todayFa } })
+      .sort({ date: 1 })
+      .lean();
 
     if (!events) {
       return res.status(404).json({ message: "there is no event" });
@@ -81,28 +84,26 @@ exports.getToday = async (req, res) => {
 exports.getWeekly = async (req, res) => {
   try {
     const today = new Date();
-    const now = new Date()
-    const week = today.setDate(today.getDate() + 7); 
+    const now = new Date();
+    const week = today.setDate(today.getDate() + 7);
 
     const weekFa = today.toLocaleDateString("fa-IR", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        calendar: "persian",
-      });
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      calendar: "persian",
+    });
 
     const nowFa = now.toLocaleDateString("fa-IR", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        calendar: "persian",
-      });
-     
-  
-      const events = await eventModel.find({  $and: [
-        { date: { $gte: nowFa } },
-        { date: { $lte: weekFa } }
-      ]}).sort({date:1})
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      calendar: "persian",
+    });
+
+    const events = await eventModel
+      .find({ $and: [{ date: { $gte: nowFa } }, { date: { $lte: weekFa } }] })
+      .sort({ date: 1 })
       .lean();
 
     if (!events) {
@@ -110,7 +111,6 @@ exports.getWeekly = async (req, res) => {
     }
 
     return res.status(200).json(events);
-   
   } catch (error) {
     return res.json(error);
   }
@@ -131,12 +131,14 @@ exports.editEvent = async (req, res) => {
       return res.status(422).json(resultValidate);
     }
 
+    const formattedDate = date.replace(/(^|\/)۰+/g, "$1");
+
     const updatedEvent = await eventModel.findOneAndUpdate(
       { _id: id },
       {
         title,
         description,
-        date,
+        date: formattedDate,
         time,
       }
     );

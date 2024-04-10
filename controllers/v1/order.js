@@ -50,6 +50,38 @@ exports.getAll = async (req, res) => {
     }
 }
 
+exports.report = async (req, res) => {
+    try {
+        const sales = await orderModel.aggregate([
+          {
+            $group: {
+              _id: { $month: '$createdAt' }, // Group by month (extracted from createdAt)
+              totalAmount: { $sum: '$price' }, // Sum the 'amount' field
+            },
+          },
+          {
+            $project: {
+              _id: false, // Exclude the default '_id' field
+              month: {
+                $arrayElemAt: [
+                  [
+                    '', 'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                  ],
+                  '$_id'
+                ],
+              },
+              totalAmount: true, // Keep the total amount
+            },
+          },
+        ]);
+      
+        return res.status(200).json(sales)
+    } catch (err) {
+        return res.json(err)
+    }
+}
+
 exports.editOrder = async (req, res) => {
     try {
 

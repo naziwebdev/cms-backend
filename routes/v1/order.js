@@ -8,7 +8,9 @@ const router = express.Router()
 router.route('/')
     .post(authMiddleware, orderController.create)
     .get(authMiddleware, isAdminMiddleware, orderController.getAll)
-
+    router
+    .route("/report")
+    .get(authMiddleware, isAdminMiddleware, orderController.report);
 
 router.route('/:id')
     .put(authMiddleware, isAdminMiddleware, orderController.editOrder)

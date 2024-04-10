@@ -20,6 +20,39 @@ exports.getAll = async (req, res) => {
     }
 }
 
+exports.report = async (req, res) => {
+    try {
+        const users = await userModel.aggregate([
+          {
+            $group: {
+              _id: { $month: '$createdAt' }, // Group by the month (number)
+              numberofdocuments: { $sum: 1 }, // Count the documents
+            },
+          },
+          {
+            $project: {
+              _id: false, // Remove the default '_id' field
+              month: {
+                $arrayElemAt: [
+                  [
+                    '', // Month numbers start at 1, so the 0th element can be anything
+                    'january', 'february', 'march', 'april', 'may', 'june',
+                    'july', 'august', 'september', 'october', 'november', 'december'
+                  ],
+                  '$_id'
+                ],
+              },
+              numberofdocuments: true, 
+            },
+          },
+        ]);
+      
+        return res.status(200).json(users)
+    } catch (err) {
+        return res.json(err)
+    }
+}
+
 exports.editUser = async (req, res) => {
 
     try {

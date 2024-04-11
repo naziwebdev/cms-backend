@@ -9,6 +9,9 @@ router.route('/')
     .post(authMiddleWare, cmController.create)
     .get(authMiddleWare, isAdminMiddleware, cmController.getAll)
 
+router.route('/report')
+.get(authMiddleWare,isAdminMiddleware,cmController.report)
+
 
 router.route('/:id')
     .delete(authMiddleWare, isAdminMiddleware, cmController.remove)

@@ -85,6 +85,27 @@ exports.getAll = async (req, res) => {
     }
 
 }
+exports.report = async (req, res) => {
+
+    try {
+
+        const comments = await  commentModel.aggregate([
+            {
+              $group: {
+                _id: "$score", // Group by the "score" field
+                count: { $sum: 1 }, // Calculate the count for each group
+              },
+            },
+          ]);
+      
+
+        return res.status(200).json(comments)
+
+    } catch (error) {
+        return res.json(error)
+    }
+
+}
 exports.remove = async (req, res) => {
     try {
 

@@ -20,6 +20,10 @@ router
   .get(productController.getAll);
 
 router
+  .route("/reportCategory")
+  .get(authMiddleware, isAdminMiddleware, productController.reportCategory);
+
+router
   .route("/report")
   .get(authMiddleware, isAdminMiddleware, productController.report);
 

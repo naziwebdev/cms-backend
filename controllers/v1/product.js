@@ -99,6 +99,32 @@ exports.report = async (req, res) => {
 }
 
 
+exports.reportCategory = async (req, res) => {
+    try {
+
+        const category = await productModel.aggregate([
+            {
+              $group: {
+                _id: "$categoryId", // Group by the 'category' field
+                count: { $sum: 1 }, // Calculate the count for each group
+              },
+            },
+            {
+                $lookup: {
+                  from: "categories", // The collection to join with
+                  localField: "_id", // Field from the input documents
+                  foreignField: "_id", // Field from the documents of the "from" collection
+                  as: "categoryDetails" // Output array field
+                }
+              }
+          ]);
+        return res.status(200).json(category)
+    } catch (err) {
+        return res.json(err)
+    }
+}
+
+
 exports.editProduct = async (req, res) => {
     try {
 

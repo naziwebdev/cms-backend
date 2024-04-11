@@ -121,6 +121,17 @@ exports.login = async (req, res) => {
 
 exports.getMe = async (req, res) => {
 
-    //codes ...
+ try{
+
+    const user = await userModel.findOne({_id:req.user._id},'-password')
+    if(!user){
+        return res.status(404).json({ message: 'not found user' })
+    }
+
+    return res.status(200).json(user)
+
+ }catch (err) {
+    return res.json(err)
+}
 
 }

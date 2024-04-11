@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
         const payloadToken = jwt.verify(token, process.env.SECRET_KEY)
 
         const user = await userModel.findOne({ _id: payloadToken.id }, '-password').lean()
-
+       
         req.user = user
 
         next()

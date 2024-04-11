@@ -96,8 +96,12 @@ exports.report = async (req, res) => {
                 count: { $sum: 1 }, // Calculate the count for each group
               },
             },
+            {
+              $sort: {
+                _id: -1, // Sort by the "_id" field (which is the "score" field) in ascending order
+              },
+            },
           ]);
-      
 
         return res.status(200).json(comments)
 

@@ -73,6 +73,9 @@ exports.report = async (req, res) => {
               totalAmount: true, // Keep the total amount
             },
           },
+          {
+            $sort: { month: -1 } 
+          }
         ]);
       
         return res.status(200).json(costs)

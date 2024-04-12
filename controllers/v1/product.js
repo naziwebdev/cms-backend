@@ -90,6 +90,9 @@ exports.report = async (req, res) => {
               numberofdocuments: true, 
             },
           },
+          {
+            $sort: { month: -1 } 
+          }
         ]);
       
         return res.status(200).json(products)

@@ -1,4 +1,4 @@
-# fllstack-cms
+# fullstack-cms
 
 ## description
 This is a fullstack cms project, all the parts are dynamic from the backend of nodejs, and the only non-dynamic part is the map that this part will also be dynamic in the future.

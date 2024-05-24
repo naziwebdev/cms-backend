@@ -109,8 +109,10 @@ exports.login = async (req, res) => {
 
         const user = validateIdentifier.toObject()
         Reflect.deleteProperty(validateIdentifier, 'password')
+        
+        res.cookie('token',accessToken, { maxAge:2592000000 , httpOnly: true });
 
-        return res.status(200).json({ message: 'user login successfully', accessToken })
+        return res.status(200).json({ message: 'user login successfully'})
 
     } catch (err) {
         return res.status(500).json({ message: 'unknown server error' })

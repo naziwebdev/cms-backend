@@ -38,6 +38,7 @@ exports.getAll = async (req, res) => {
 
         const todos = await todoModel.find({})
         .sort({haveStar:-1})
+        .sort({_id:-1})
         .lean()
 
         if (!todos) {

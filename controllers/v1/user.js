@@ -8,7 +8,9 @@ const userValidator = require('../../validators/v1/user')
 exports.getAll = async (req, res) => {
 
     try {
-        const users = await userModel.find({}, '-password').lean()
+        const users = await userModel.find({}, '-password')
+        .sort({_id:-1})
+        .lean()
 
         if (!users) {
             return res.status(404).json({ message: 'not found users' })

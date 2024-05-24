@@ -1,30 +1,25 @@
-const userModel = require('../models/user')
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
+const userModel = require("../models/user");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 module.exports = async (req, res, next) => {
+  const token = req.cookies["token"];
 
-    const getToken = req.header('Authorization')?.split(' ')
+  if (!token) {
+    return res.redirect("http://localhost:5173/login");
+  }
 
-    if (getToken.length !== 2) {
-        return res.status(403).json({ message: 'access to this route is forbidden' })
-    }
+  try {
+    const payloadToken = jwt.verify(token, process.env.SECRET_KEY);
 
-    const token = getToken[1]
+    const user = await userModel
+      .findOne({ _id: payloadToken.id }, "-password")
+      .lean();
 
-    try {
+    req.user = user;
 
-        const payloadToken = jwt.verify(token, process.env.SECRET_KEY)
-
-        const user = await userModel.findOne({ _id: payloadToken.id }, '-password').lean()
-       
-        req.user = user
-
-        next()
-
-    } catch (err) {
-
-        return res.json(err)
-    }
-
-}
+    next();
+  } catch (err) {
+    return res.json(err);
+  }
+};
